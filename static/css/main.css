@@ -108,3 +108,6 @@ body {
 .center-block {
     float:none;
 }
+#header {
+  font-family: 'Architects Daughter', cursive;
+}

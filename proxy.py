@@ -3,7 +3,7 @@ import requests
 import json
 import re
 
-valid_regex = re.compile(r"(http://requestb.in.*|http://(portal.)?eurosentiment.eu.*|http://217.26.90.243:8080/EuroSentimentServices.*|http://54.201.101.125/sparql.*|http://54.187.254.3.*)")
+valid_regex = re.compile(r"(http://requestb.in.*|http://(portal.)?eurosentiment.eu.*|http://217.26.90.243:8080/EuroSentimentServices.*|http://54.201.101.125/sparql.*|http://54.187.254.3.*|http://demos.gsi.dit.upm.es/.*|http://portal.eurosentiment.eu.*|http://eurosentiment-endpoint.herokuapp.com.*)")
 app = Flask(__name__)
 
 RAW = "raw"
@@ -24,7 +24,9 @@ def hello_world():
             parameters =  payload.get("parameters", [])
             for param in parameters:
                 parameters[param] = parameters[param].encode('utf-8')
-            data =  payload.get("data").encode("utf-8")
+            data = payload.get("data", None)
+            if isinstance(data, basestring):
+                data =  data.encode("utf-8")
             r = requests.request(method, url, data=data, params=parameters, headers=headers, verify=False)
             return r.text
         else:

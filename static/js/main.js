@@ -39,6 +39,7 @@ function getDictFrom(selector){
 function getResources(){
     console.log("Getting services");
     headers = getDictFrom("#headers-resources");
+    headers["content-type"] = "application/json";
     console.log("Headers:", headers);
     parameters = getDictFrom("#parameters-resources");
     parameters.query = $("#query").val();
@@ -52,6 +53,7 @@ function getResources(){
     console.log("Payload:", payload);
     payload.data = JSON.stringify(parameters);
     console.log("Payload:", payload);
+    $("#content-resources").hide();
     $.ajax({
         type: "POST",
         url: "http://demos.gsi.dit.upm.es/eurosentiment-playground/proxy",
@@ -69,8 +71,8 @@ function getResources(){
             }catch(ex){
             }
             console.log("Received:", json);
-            $("#content-resources").show();
             $("#visualisation-resources").html(replaceURLWithHTMLLinks(JSON.stringify(json, null, 2)));
+            $("#content-resources").show();
         }
     });
     return false;
@@ -79,6 +81,7 @@ function getResources(){
 function getServices(){
     console.log("Getting services");
     headers = getDictFrom("#headers-services");
+    headers["content-type"] = "application/x-www-form-urlencoded";
     console.log("Headers:", headers);
     parameters = getDictFrom("#parameters-services");
     console.log("Headers:", headers);
@@ -98,6 +101,7 @@ function getServices(){
         payload.data = parameters;
     }
     console.log("Payload:", payload);
+    $("#content-services").hide();
     $.ajax({
         type: "POST",
         url: "http://demos.gsi.dit.upm.es/eurosentiment-playground/proxy",
@@ -115,8 +119,8 @@ function getServices(){
             }catch(ex){
             }
             console.log("Received:", json);
-            $("#content-services").show();
             $("#visualisation-services").html(replaceURLWithHTMLLinks(JSON.stringify(json, null, 2)));
+            $("#content-services").show();
         }
     });
     return false;
